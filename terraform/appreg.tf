@@ -1,21 +1,30 @@
-resource "azuread_application" "app" {
-  display_name = "PythonApp"
+# =============================
+# Azure AD Application for Flask App
+# =============================
+resource "azuread_application" "flask_app" {
+  display_name = "FlaskPythonApp"
+
+  web {
+    redirect_uris = ["http://localhost:5000/getAToken"]
+  }
 }
 
-resource "azuread_service_principal" "sp" {
-  client_id = azuread_application.app.client_id
+resource "azuread_service_principal" "flask_sp" {
+  client_id = azuread_application.flask_app.client_id
 }
 
-resource "azuread_service_principal_password" "example" {
-  service_principal_id = azuread_service_principal.sp.id
+resource "azuread_service_principal_password" "flask_sp_secret" {
+  service_principal_id = azuread_service_principal.flask_sp.id
 }
 
-resource "azurerm_role_assignment" "rbac" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.sp.object_id
-}
+# Placeholder for RBAC assignment if needed
+# resource "azurerm_role_assignment" "flask_rbac" {
+#   scope                = "/subscriptions/${var.subscription_id}"
+#   role_definition_name = "Contributor"
+#   principal_id         = azuread_service_principal.flask_sp.object_id
+# }
 
-output "app_id" {
-  value = azuread_application.app.client_id
+# Output the Flask Application (Client) ID
+output "flask_app_id" {
+  value = azuread_application.flask_app.client_id
 }
