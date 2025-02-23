@@ -31,4 +31,5 @@ output "flask_app_id" {
 
 output "flask_app_secret" {
   value = azuread_service_principal_password.flask_sp_secret.value
+  sensitive = true
 }
