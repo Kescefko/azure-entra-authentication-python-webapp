@@ -10,7 +10,7 @@ resource "azuread_application" "flask_app" {
 }
 
 resource "azuread_service_principal" "flask_sp" {
-  client_id = azuread_application.flask_app.client_id
+  application_id = azuread_application.flask_app.application_id
 }
 
 resource "azuread_service_principal_password" "flask_sp_secret" {
