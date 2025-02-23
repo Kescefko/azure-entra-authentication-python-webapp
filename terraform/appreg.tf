@@ -28,3 +28,7 @@ resource "azuread_service_principal_password" "flask_sp_secret" {
 output "flask_app_id" {
   value = azuread_application.flask_app.client_id
 }
+
+output "flask_app_secret" {
+  value = azuread_service_principal_password.flask_sp_secret.value
+}
