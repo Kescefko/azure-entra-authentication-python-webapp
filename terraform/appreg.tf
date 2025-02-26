@@ -7,6 +7,16 @@ resource "azuread_application" "flask_app" {
   web {
     redirect_uris = ["http://localhost:5000/getAToken"]
   }
+
+  api {
+    oauth2_permission_scope {
+      admin_consent_description = "Allow access to Flask Api"
+      admin_consent_display_name = "Access Flask API"
+      id = "00000000-0000-0000-0000-000000000001"
+      type = "Admin"
+      value = "api.access"
+    }
+  }
 }
 
 resource "azuread_service_principal" "flask_sp" {
